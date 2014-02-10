@@ -6,6 +6,7 @@ class App < Sinatra::Base
     content_type 'image/png'
 
     width, height = params[:size].split("x").map(&:to_i)
+    height ||= width # if input width only
     img = Magick::Image.new(width, height) { self.background_color = "#cccccc" }
     Magick::Draw.new.annotate(img, 0, 0, 0, 0, "#{width}x#{height}") do
       self.gravity = Magick::CenterGravity
