@@ -10,7 +10,7 @@ class App < Sinatra::Base
   #   |     |    `- color (optional)
   #   |      `- bgcolor (optional)
   #    `-size (width x height) or width
-  get %r{/(?<size>[0-9x]+)/?(?<bgcolor>[0-9a-fA-F]+)?/?(?<color>[0-9a-fA-F]+)?(&text=)?(?<text>.*)?} do
+  get %r{/(?<size>[0-9x]+)(?:/(?<bgcolor>[0-9a-fA-F]+)(?:/(?<color>[0-9a-fA-F]+))?)?(?:&text=(?<text>.*))?} do
     content_type 'image/png'
     width, height = params[:size].split("x").map(&:to_i)
     height ||= width # if input width only
