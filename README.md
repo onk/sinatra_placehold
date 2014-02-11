@@ -3,6 +3,16 @@ sinatra_placehold
 
 clone of [placehold.it](http://placehold.it)
 
+`http://localhost:9292/100`
+
+return
+
+![100.png](100.png)
+
+
+Options
+--------------------------------
+
 `http://localhost:9292/60x80/000/f00.png&text=hoge`
 
 return
