@@ -16,6 +16,7 @@ class App < Sinatra::Base
     bgcolor = params[:bgcolor] || "cccccc"
     color   = params[:color]   || "000000"
     label   = params[:label] ? CGI.unescape(params[:label]) : "#{width}x#{height}"
+    format  = params[:format]  || "png"
     img = Magick::Image.new(width, height) {
       self.background_color = "##{bgcolor}"
     }
@@ -24,7 +25,7 @@ class App < Sinatra::Base
       self.fill = "##{color}"
     end
 
-    case params[:format].to_sym
+    case format.to_sym
     when :jpg, :jpeg
       content_type 'image/jpeg'
       img.format = 'jpg'
