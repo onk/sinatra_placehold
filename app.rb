@@ -3,15 +3,14 @@ require "RMagick"
 require "cgi"
 
 class App < Sinatra::Base
-  # /60x80/000/f00&text=hoge
-  #   ^     ^   ^       ^
-  #   |     |   |       |
+  # /60x80/000/f00&text=hoge.png
+  #   ^     ^   ^       ^     ^
+  #   |     |   |       |      `- format (optional, default: png)
   #   |     |   |        `- label (optional)
   #   |     |    `- color (optional)
   #   |      `- bgcolor (optional)
-  #    `-size (width x height) or width
-  get %r{/(?<size>[0-9x]+)(?:/(?<bgcolor>[0-9a-fA-F]+)(?:/(?<color>[0-9a-fA-F]+))?)?(?:&text=(?<text>.*))?} do
-    content_type 'image/png'
+  #    `- size(width x height) or width
+  get %r{/(?<size>[0-9x]+)(?:/(?<bgcolor>[0-9a-fA-F]+)(?:/(?<color>[0-9a-fA-F]+))?)?(?:&text=(?<text>.*))?(?:\.(?<format>[^\/.?]+))?} do
     width, height = params[:size].split("x").map(&:to_i)
     height ||= width # if input width only
     bgcolor = params[:bgcolor] || "cccccc"
@@ -25,7 +24,17 @@ class App < Sinatra::Base
       self.fill = "##{color}"
     end
 
-    img.format = 'png'
+    case params[:format].to_sym
+    when :jpg, :jpeg
+      content_type 'image/jpeg'
+      img.format = 'jpg'
+    when :gif
+      content_type 'image/gif'
+      img.format = 'gif'
+    else
+      content_type 'image/png'
+      img.format = 'png'
+    end
     img.to_blob
   end
 end
