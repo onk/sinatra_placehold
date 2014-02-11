@@ -1,8 +1,13 @@
 require "sinatra/base"
 require "RMagick"
 require "cgi"
+require "slim"
 
 class App < Sinatra::Base
+  get "/" do
+    slim :index
+  end
+
   # /60x80/000/f00.png&text=hoge
   #   ^     ^   ^   ^    ^
   #   |     |   |   |     `- label (optional)

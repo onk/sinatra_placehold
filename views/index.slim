@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title sinatra-placehold
+    style[type="text/css"]
+      | #content-left{font-size:18px;font-weight:bold;line-height:1.2em;width:400px;float:left;}
+        #content-right{width:351px;position:absolute;margin-left:450px;z-index:-1;text-align:left;}
+        #content-right img{margin:0 0 6px 0;}
+        #content-right .image{margin-right:6px;}
+        .url{border:1px dotted #aaa;padding:25px;text-align:center;display:block;margin:25px 0;}
+        .url a{color:white;padding:2px 4px;background:#222;text-decoration:none;}
+        .url a:hover{background:#E8117F;}
+
+  body
+    h1 Sinatra Placehold
+
+    #content-left
+      | How does it work? Just put your image size after our URL and you'll get a placeholder.<br>
+      .url
+        | Like this:&nbsp;
+        a[href="/350x150"] http://localhost:9292/350x150
+      | You can also use it in your code, like this:<br>
+      .url
+        | &lt;img src="http://localhost:9292/350x150"&gt;
+      | Have fun!
+
+    #content-right
+      img[src="/350x150"]
+      img[src="/140x100" class="image"]
+      img[src="/200x100"]
+      img[src="/350x65"]
