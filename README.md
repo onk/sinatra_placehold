@@ -13,14 +13,14 @@ return
 Options
 --------------------------------
 
-`http://localhost:9292/60x80/000/f00.png&text=hoge`
+`http://localhost:9292/60x80/000/f00.png?text=hoge`
 
 return
 
 ![hoge.png](hoge.png)
 
 ```text
-http://localhost:9292/60x80/000/f00.png&text=hoge
+http://localhost:9292/60x80/000/f00.png?text=hoge
                        ^     ^   ^   ^    ^
                        |     |   |   |     `- label (optional)
                        |     |   |    `- format (optional, default: png)

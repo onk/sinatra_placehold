@@ -8,19 +8,19 @@ class App < Sinatra::Base
     slim :index
   end
 
-  # /60x80/000/f00.png&text=hoge
+  # /60x80/000/f00.png?text=hoge
   #   ^     ^   ^   ^    ^
   #   |     |   |   |     `- label (optional)
   #   |     |   |    `- format (optional, default: png)
   #   |     |    `- color (optional)
   #   |      `- bgcolor (optional)
   #    `- size(width x height) or width
-  get %r{/(?<size>[0-9x]+)(?:/(?<bgcolor>[0-9a-fA-F]+)(?:/(?<color>[0-9a-fA-F]+))?)?(?:\.(?<format>[^\/.?]+))?(?:&text=(?<label>.*))?} do
+  get %r{/(?<size>[0-9x]+)(?:/(?<bgcolor>[0-9a-fA-F]+)(?:/(?<color>[0-9a-fA-F]+))?)?(?:\.(?<format>[^\/.?]+))?} do
     width, height = params[:size].split("x").map(&:to_i)
     height ||= width # if input width only
     bgcolor = params[:bgcolor] || "cccccc"
     color   = params[:color]   || "000000"
-    label   = params[:label] ? CGI.unescape(params[:label]) : "#{width}x#{height}"
+    label   = (params[:text].nil? || params[:text].empty?) ? "#{width}x#{height}" : params[:text]
     format  = params[:format]  || "png"
     img = Magick::Image.new(width, height) {
       self.background_color = "##{bgcolor}"
